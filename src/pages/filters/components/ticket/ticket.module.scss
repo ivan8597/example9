@@ -1,0 +1,91 @@
+.ticket {
+  max-width: 500px;
+  height: 150px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: white;
+  display: grid;
+  grid-template-columns: 125px 20px auto;
+  box-shadow: 4px 2px 8px 0 rgba(34, 60, 80, 0.07);
+  position: relative;
+  bottom: 0;
+  transition: bottom 0.5s ease;
+
+  .price {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    .button {
+      font-size: 14px;
+      padding: 5px;
+      text-align: center;
+      background-color: var(--orange);
+      border-radius: 5px;
+      color: white;
+
+      &:hover {
+        cursor: pointer;
+        background-color: var(--light-orange);
+      }
+    }
+  }
+
+  .dash {
+    background-color: var(--grey);
+    width: 1px;
+    height: calc(100% + 40px);
+    margin: -20px 10px;
+  }
+
+  .description {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+
+    .stops {
+      position: absolute;
+      font-size: 11px;
+      font-weight: 500;
+      width: 80px;
+      left: 40%;
+      top: 10px;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: var(--light-grey);
+      border-bottom: 1px solid var(--light-grey);
+      @media screen and (max-width: 840px) {
+        display: none;
+      }
+    }
+
+    .destination,
+    .origin {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      color: var(--dark-grey);
+
+      .time {
+        font-size: 32px;
+        font-weight: 400;
+      }
+
+      .details {
+        font-size: 15px;
+        font-weight: 500;
+
+        .date {
+          font-size: 13px;
+          font-weight: 400;
+          color: var(--light-grey);
+        }
+      }
+    }
+  }
+
+  &:hover {
+    bottom: 5px;
+    box-shadow: 4px 2px 8px 10px rgba(34, 60, 80, 0.07);
+  }
+}
