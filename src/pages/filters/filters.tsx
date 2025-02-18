@@ -2,10 +2,13 @@ import { applyFilters } from "./applyFilters";
 import { Filter } from "./components/filter";
 import { Ticket } from "./components/ticket";
 import { Checkbox } from "../../checkbox/checkbox";
-import { Curriencies, Change } from "../../utilities/consts";
+import { Change } from "../../utilities/consts";
 import styles from "./filters.module.scss";
+import { useCurrencyStore } from '../../store/currencyStore';
+import { Currency, RATES } from '../../utils/currency';
 
-export const PageFilters = () => {//страница для отрисоки компонентов 
+export const PageFilters = () => {
+  const { currency, setCurrency } = useCurrencyStore();
   const {
     isValues,
     tickets,
@@ -20,13 +23,15 @@ export const PageFilters = () => {//страница для отрисоки к�
       <div className={styles.filters}>
         <span className={styles.title}>ВАЛЮТА</span>
         <div className={styles.currencies}>
-          { Curriencies.map((val, id) => (
+          {(Object.keys(RATES) as Currency[]).map((curr) => (
             <div
-            key={id}
-            className={`${styles.currency} ${val=== "RUB" ? styles.selected : ""}`}
-          >
-            {val}
-          </div>
+              key={curr}
+              className={`${styles.currency} ${curr === currency ? styles.selected : ""}`}
+              onClick={() => setCurrency(curr)}
+              role="button"
+            >
+              {curr}
+            </div>
           ))}
         </div>
         <span className={styles.title}>КОЛИЧЕСТВО ПЕРЕСАДОК</span>

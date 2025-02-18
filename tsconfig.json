@@ -3,5 +3,10 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "types": ["node", "jest", "@testing-library/jest-dom"],
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "esModuleInterop": true
+  }
 }
