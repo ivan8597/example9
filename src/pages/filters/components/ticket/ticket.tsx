@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import moment from "moment";
 import { useSpacesFromNumbers } from "../../../../utilities/useSpacesFormNumbers";
 import { declension } from "../../../../utilities/declension";
@@ -15,35 +15,48 @@ const formatDate = (dateStr: string) => {
 };
 
 export const Ticket: FC<TicketProps> = ({ ticket }) => {
+  console.log('Ticket data:', ticket);
   const { currency } = useCurrencyStore();
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleBuyTicket = () => {
     const savedTickets = JSON.parse(localStorage.getItem('tickets') || '[]');
+    
     const newTicket = {
       id: Date.now(),
       carrier: ticket.carrier,
-      price: ticket.price, // сохраняем цену в рублях
-      date: new Date().toLocaleString('ru-RU'),
+      price: ticket.price,
+      date: new Date().toISOString(),
       segments: [{
-        origin: `${ticket.origin}, ${ticket.origin_name}`,
-        destination: `${ticket.destination}, ${ticket.destination_name}`,
-        date: `${ticket.departure_time}\n${ticket.origin}, ${ticket.origin_name}\n${formatDate(ticket.departure_date)}\n${ticket.arrival_time}\n${ticket.destination}, ${ticket.destination_name}\n${formatDate(ticket.arrival_date)}`,
-        stops: Array(ticket.stops).fill('').map(() => 'Информация о пересадке'),
-        duration: moment(ticket.arrival_date, "DD.MM.YY")
-          .diff(moment(ticket.departure_date, "DD.MM.YY"), 'minutes')
+        origin: ticket.origin,
+        origin_name: ticket.origin_name,
+        destination: ticket.destination,
+        destination_name: ticket.destination_name,
+        departure_time: ticket.departure_time,
+        departure_date: ticket.departure_date,
+        arrival_time: ticket.arrival_time,
+        arrival_date: ticket.arrival_date,
+        stops: Array(ticket.stops).fill('').map((_, i) => `Пересадка ${i + 1}`),
+        duration: moment(ticket.arrival_time, "HH:mm")
+          .diff(moment(ticket.departure_time, "HH:mm"), 'minutes')
       }]
     };
-    
+
+    console.log('Saving new ticket:', newTicket);
     localStorage.setItem('tickets', JSON.stringify([...savedTickets, newTicket]));
-    alert('Билет добавлен в заказы!');
+    setIsModalOpen(true);
   };
 
   const convertedPrice = convertPrice(ticket.price, currency);
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className={styles.ticket}>
       <div className={styles.price}>
-        <img src={Logo[ticket.carrier]} width={"119px"} />
+        <img src={Logo[ticket.carrier]} width={"119px"} alt={ticket.carrier} />
         <div 
           className={styles.button}
           onClick={handleBuyTicket}
@@ -81,6 +94,17 @@ export const Ticket: FC<TicketProps> = ({ ticket }) => {
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <>
+          <div className={styles.modalBackdrop} onClick={closeModal}></div>
+          <div className={styles.modal}>
+            <div className={styles.modalContent}>
+              <p>Билет добавлен в заказы!</p>
+              <button onClick={closeModal}>Закрыть</button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

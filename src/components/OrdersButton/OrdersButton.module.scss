@@ -71,15 +71,61 @@
 
   .route {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 30px;
+    align-items: start;
+    padding: 20px 0;
+  }
 
-    > div {
-      p:first-child {
-        color: #a0b0b9;
-        font-size: 12px;
-        margin-bottom: 5px;
+  .routeInfo {
+    .time {
+      font-size: 32px;
+      font-weight: 600;
+      color: #4a4a4a;
+      margin-bottom: 5px;
+      line-height: 1;
+    }
+
+    .city {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 5px 0;
+      color: #4a4a4a;
+    }
+
+    .date {
+      font-size: 12px;
+      color: #8b9497;
+    }
+  }
+
+  .stopsInfo {
+    text-align: center;
+    position: relative;
+    padding: 0 20px;
+    margin-top: 15px;
+
+    .stopsLine {
+      height: 1px;
+      background-color: #d2d5d6;
+      position: relative;
+      margin: 10px 0;
+
+      &:after {
+        content: '✈';
+        position: absolute;
+        right: -10px;
+        top: -10px;
+        color: #d2d5d6;
+        transform: rotate(-90deg);
       }
+    }
+
+    .stops {
+      font-size: 12px;
+      color: #8b9497;
+      text-transform: uppercase;
+      margin-top: 5px;
     }
   }
 
@@ -149,5 +195,25 @@
   &.active {
     background: #2196f3;
     color: white;
+  }
+}
+
+.city {
+  font-weight: 600;
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.clearBtn {
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #cc0000;
   }
 } 

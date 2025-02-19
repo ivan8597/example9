@@ -1,6 +1,6 @@
 export const Logo: Record<string, string> = {
-  'S7': '/logos/S7.png',
-  'Победа': '/logos/pobeda.png',
-  'Red Wings': '/logos/redwings.png'
-  // добавьте другие авиакомпании по необходимости
+  'S7': '/src/assets/logos/S7.png',
+  'SU': '/src/assets/logos/aeroflot.png',
+  'TK': '/src/assets/logos/turkish.png',
+  
 }; 

@@ -1,0 +1,29 @@
+.stopsInfo {
+  text-align: center;
+  position: relative;
+  padding: 0 20px;
+  margin-top: 15px;
+
+  .stopsLine {
+    height: 1px;
+    background-color: #d2d5d6;
+    position: relative;
+    margin: 10px 0;
+
+    &:after {
+      content: '✈';
+      position: absolute;
+      right: -10px;
+      top: -10px;
+      color: #d2d5d6;
+      transform: rotate(-90deg);
+    }
+  }
+
+  .stops {
+    font-size: 12px;
+    color: #8b9497;
+    text-transform: uppercase;
+    margin-top: 5px;
+  }
+} 
