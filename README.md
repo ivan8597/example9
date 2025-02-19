@@ -15,10 +15,10 @@
 
 1. Установите зависимости:
 bash
-pnpm install
+npm install
 2. Запустите проект в режиме разработки:
 bash
-pnpm dev
+npm run dev
 
 
 Приложение будет доступно по адресу: http://localhost:5173
