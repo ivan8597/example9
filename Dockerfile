@@ -1,33 +1,24 @@
-FROM node:20.17.0 AS build
+FROM node:18-alpine
 
 WORKDIR /app
 
 # Установка pnpm
 RUN npm install -g pnpm
 
-# Копирование файлов package.json
-COPY package*.json ./
+# Копирование файлов зависимостей
+COPY package.json pnpm-lock.yaml ./
 
-# Установка всех зависимостей для сборки
+# Установка зависимостей
 RUN pnpm install
 
 # Копирование исходного кода
 COPY . .
 
-# Исключение тестовых файлов из сборки
-RUN find . -name "*.test.*" -type f -delete
-RUN find . -name "__tests__" -type d -exec rm -rf {} +
-RUN find . -name "test-utils.tsx" -type f -delete
-
-# Сборка проекта
+# Сборка приложения
 RUN pnpm build
 
-# Очистка devDependencies после сборки
-RUN pnpm prune --prod
+# Открытие порта
+EXPOSE 3000
 
-# Настройка nginx
-FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"] 
+# Запуск приложения
+CMD ["pnpm", "preview", "--host"]
