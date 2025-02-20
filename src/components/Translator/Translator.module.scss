@@ -1,0 +1,29 @@
+.translator {
+  margin-top: 10px;
+
+  .translateBtn {
+    padding: 5px 10px;
+    background: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background: #1976d2;
+    }
+
+    &:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  }
+
+  .translatedText {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+} 

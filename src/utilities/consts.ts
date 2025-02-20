@@ -1,7 +1,10 @@
-export const Change = [
-  { id: 0, name: "Без пересадок" },
-  { id: 1, name: "1 пересадка" },
-  { id: 2, name: "2 пересадки" },
-  { id: 3, name: "3 пересадки" },
-];
+import { Filter } from '../types/filter';
+import { translations } from '../utils/translations';
+
+export const Change: Filter[] = [
+  { id: 1, name: "Без пересадок", label: "Без пересадок" },
+  { id: 2, name: "1 пересадка", label: "1 пересадка" },
+  { id: 3, name: "2 пересадки", label: "2 пересадки" },
+  { id: 4, name: "3 пересадки", label: "3 пересадки" }
+] as const;
 export const Curriencies = ["RUB", "USD", "EUR"];

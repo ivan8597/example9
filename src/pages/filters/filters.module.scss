@@ -84,3 +84,48 @@
     flex-direction: column;
   }
 }
+
+.languageSwitch {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 1000;
+  background: white;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .langBtn {
+    padding: 8px 16px;
+    border: 1px solid #2196f3;
+    background: none;
+    color: #2196f3;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    min-width: 60px;
+
+    &:hover {
+      background: #e3f2fd;
+    }
+
+    &.active {
+      background: #2196f3;
+      color: white;
+      border-color: #2196f3;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.3);
+    }
+  }
+}
+
+
+.title, .langBtn {
+  font-family: 'Noto Sans SC', sans-serif;
+}

@@ -36,7 +36,6 @@ export const Filter: FC<FilterProps> = ({
             handleOnClick(filter.id);
           }}
         >
-          ТОЛЬКО
         </div>
       </Checkbox>
     </>

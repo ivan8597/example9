@@ -7,6 +7,8 @@ import { useCurrencyStore } from "../../../../store/currencyStore";
 import styles from "./ticket.module.scss";
 import { TicketProps } from "../../../../types";
 import { SYMBOLS, convertPrice } from "../../../../utils/currency";
+import { useLanguageStore } from '../../../../store/languageStore';
+import { translations, TranslationKey } from '../../../../utils/translations';
 
 const formatDate = (dateStr: string) => {
   return moment(dateStr, "DD.MM.YY")
@@ -15,9 +17,16 @@ const formatDate = (dateStr: string) => {
 };
 
 export const Ticket: FC<TicketProps> = ({ ticket }) => {
-  console.log('Ticket data:', ticket);
   const { currency } = useCurrencyStore();
+  const { language } = useLanguageStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const translateCity = (city: string) => {
+    if (city in translations[language]) {
+      return translations[language][city as keyof typeof translations[typeof language]];
+    }
+    return city;
+  };
 
   const handleBuyTicket = () => {
     const savedTickets = JSON.parse(localStorage.getItem('tickets') || '[]');
@@ -42,7 +51,6 @@ export const Ticket: FC<TicketProps> = ({ ticket }) => {
       }]
     };
 
-    console.log('Saving new ticket:', newTicket);
     localStorage.setItem('tickets', JSON.stringify([...savedTickets, newTicket]));
     setIsModalOpen(true);
   };
@@ -51,6 +59,14 @@ export const Ticket: FC<TicketProps> = ({ ticket }) => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const getStopsText = (stops: number) => {
+    if (stops === 0) return translations[language]['Без пересадок'];
+    if (stops === 1) return translations[language]['1 пересадка'];
+    if (stops === 2) return translations[language]['2 пересадки'];
+    if (stops === 3) return translations[language]['3 пересадки'];
+    return `${stops} пересадки`;
   };
 
   return (
@@ -62,7 +78,7 @@ export const Ticket: FC<TicketProps> = ({ ticket }) => {
           onClick={handleBuyTicket}
           role="button"
         >
-          Купить за <br /> {useSpacesFromNumbers(convertedPrice)} {SYMBOLS[currency]}
+          {translations[language]['Купить за']} <br /> {useSpacesFromNumbers(convertedPrice)} {SYMBOLS[currency]}
         </div>
       </div>
       <div className={styles.dash}></div>
@@ -70,24 +86,19 @@ export const Ticket: FC<TicketProps> = ({ ticket }) => {
         <div className={styles.origin}>
           <div className={styles.time}>{ticket.departure_time}</div>
           <div className={styles.details}>
-            <div>{`${ticket.origin}, ${ticket.origin_name}`}</div>
+            <div>{`${translateCity(ticket.origin)}, ${translateCity(ticket.origin_name)}`}</div>
             <div className={styles.date}>
               {formatDate(ticket.departure_date)}
             </div>
           </div>
         </div>
         <div className={styles.stops}>
-          {`${ticket.stops} ${declension(
-            ticket.stops,
-            "пересадка",
-            "пересадки",
-            "пересадок"
-          )}`}
+          {getStopsText(ticket.stops)}
         </div>
         <div className={styles.destination}>
           <div className={styles.time}>{ticket.arrival_time}</div>
           <div className={styles.details}>
-            <div>{`${ticket.destination}, ${ticket.destination_name}`}</div>
+            <div>{`${translateCity(ticket.destination)}, ${translateCity(ticket.destination_name)}`}</div>
             <div className={styles.date}>
               {formatDate(ticket.arrival_date)}
             </div>
