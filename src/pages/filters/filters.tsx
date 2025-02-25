@@ -26,7 +26,7 @@ export const PageFilters = () => {
   } = applyFilters();
 
   const t = useCallback((key: TranslationKey) => {
-    return translations[language][key];// комментарий
+    return translations[language][key]; 
   }, [language]);
 
   const getTranslatedFilters = useMemo(() => {

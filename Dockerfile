@@ -1,11 +1,12 @@
-FROM node:18-alpine
+# Multi-stage build для React приложения
+FROM node:18-alpine AS builder
 
 WORKDIR /app
 
 # Установка pnpm
 RUN npm install -g pnpm
 
-# Копирование файлов зависимостей
+# Копирование только файлов, необходимых для установки зависимостей
 COPY package.json pnpm-lock.yaml ./
 
 # Установка зависимостей
@@ -17,8 +18,17 @@ COPY . .
 # Сборка приложения
 RUN pnpm build
 
-# Открытие порта
-EXPOSE 3000
+# Рабочий образ
+FROM nginx:alpine
 
-# Запуск приложения
-CMD ["pnpm", "preview", "--host"]
+# Копирование собранного приложения из предыдущего этапа
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Копирование nginx конфигурации для SPA
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Экспозиция порта
+EXPOSE 80
+
+# Запуск Nginx
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,5 +1,5 @@
 import { Filter } from '../types/filter';
-import { translations } from '../utils/translations';
+
 
 export const Change: Filter[] = [
   { id: 1, name: "Без пересадок", label: "Без пересадок" },

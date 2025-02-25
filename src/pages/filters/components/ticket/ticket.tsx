@@ -7,7 +7,7 @@ import styles from "./ticket.module.scss";
 import { TicketProps } from "../../../../types";
 import { SYMBOLS, convertPrice } from "../../../../utils/currency";
 import { useLanguageStore } from '../../../../store/languageStore';
-import { translations} from '../../../../utils/translations';
+import { translations } from '../../../../utils/translations';
 import { motion } from 'framer-motion';
 
 const formatDate = (dateStr: string) => {
