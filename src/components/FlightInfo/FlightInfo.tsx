@@ -9,7 +9,7 @@ interface FlightInfoProps {
   date: string;
 }
 
-export const FlightInfo: FC<FlightInfoProps> = ({ time, city, cityName, date }) => {
+export const FlightInfo: FC<FlightInfoProps> = ({ time, city, cityName, date }) => {// комментарий 
   const formatDate = (dateString: string) => {
     return moment(dateString, "DD.MM.YY")
       .locale('ru')

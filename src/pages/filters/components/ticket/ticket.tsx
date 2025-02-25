@@ -9,6 +9,7 @@ import { TicketProps } from "../../../../types";
 import { SYMBOLS, convertPrice } from "../../../../utils/currency";
 import { useLanguageStore } from '../../../../store/languageStore';
 import { translations, TranslationKey } from '../../../../utils/translations';
+import { motion } from 'framer-motion';
 
 const formatDate = (dateStr: string) => {
   return moment(dateStr, "DD.MM.YY")
@@ -70,7 +71,16 @@ export const Ticket: FC<TicketProps> = ({ ticket }) => {
   };
 
   return (
-    <div className={styles.ticket}>
+    <motion.div 
+      className={styles.ticket}
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      whileHover={{ 
+        y: -5, 
+        boxShadow: "0 10px 20px rgba(0,0,0,0.15)" 
+      }}
+    >
       <div className={styles.price}>
         <img src={Logo[ticket.carrier]} width={"119px"} alt={ticket.carrier} />
         <div 
@@ -116,6 +126,6 @@ export const Ticket: FC<TicketProps> = ({ ticket }) => {
           </div>
         </>
       )}
-    </div>
+    </motion.div>
   );
 };

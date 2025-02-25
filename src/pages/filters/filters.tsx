@@ -10,6 +10,7 @@ import { Currency, RATES } from '../../utils/currency';
 import { useLanguageStore } from '../../store/languageStore';
 import { translations } from '../../utils/translations';
 import { TranslationKey } from '../../utils/translations';
+import { motion, AnimatePresence } from 'framer-motion';
 
 
 export const PageFilters = () => {
@@ -56,20 +57,29 @@ export const PageFilters = () => {
   return (
     <div className={styles.container}>
       <div className={styles.languageSwitch}>
-        <button 
+        <motion.button 
           className={`${styles.langBtn} ${language === 'RUS' ? styles.active : ''}`}
           onClick={() => setLanguage('RUS')}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
           RUS
-        </button>
-        <button 
+        </motion.button>
+        <motion.button 
           className={`${styles.langBtn} ${language === 'CHI' ? styles.active : ''}`}
           onClick={() => setLanguage('CHI')}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
           CHI
-        </button>
+        </motion.button>
       </div>
-      <div className={styles.filters}>
+      <motion.div 
+        className={styles.filters}
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6 }}
+      >
         <span className={styles.title}>{t('ВАЛЮТА')}</span>
         <div className={styles.currencies}>
           {currencyButtons}
@@ -90,12 +100,27 @@ export const PageFilters = () => {
             handleOnClick={handleOnClick}
           />
         ))}
-      </div>
-      <div className={styles.tickets}>
-        {tickets?.map((val, id) => (
-          <Ticket key={id} ticket={val} />
-        ))}
-      </div>
+      </motion.div>
+      <motion.div 
+        className={styles.tickets}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+      >
+        <AnimatePresence>
+          {tickets?.map((val, id) => (
+            <motion.div
+              key={id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, delay: id * 0.1 }}
+            >
+              <Ticket ticket={val} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
     </div>
   );
 };

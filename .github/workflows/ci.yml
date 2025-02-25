@@ -43,4 +43,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/example9:latest 
+          tags: ivan8597/example9:latest 
