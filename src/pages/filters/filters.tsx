@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import  { useCallback, useMemo } from 'react';
 import { applyFilters } from "./applyFilters";
 import { Filter } from "./components/filter";
 import { Ticket } from "./components/ticket";
@@ -26,7 +26,7 @@ export const PageFilters = () => {
   } = applyFilters();
 
   const t = useCallback((key: TranslationKey) => {
-    return translations[language][key];
+    return translations[language][key];// комментарий
   }, [language]);
 
   const getTranslatedFilters = useMemo(() => {
@@ -36,10 +36,6 @@ export const PageFilters = () => {
       label: translations[language][filter.label]
     }));
   }, [language]);
-
-  const handleLanguageChange = useCallback((newLang: 'RUS' | 'CHI') => {
-    setLanguage(newLang);
-  }, []);
 
   const currencyButtons = useMemo(() => (
     (Object.keys(RATES) as Currency[]).map((curr) => (

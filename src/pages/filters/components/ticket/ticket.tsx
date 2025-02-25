@@ -1,14 +1,13 @@
 import { FC, useState } from "react";
 import moment from "moment";
 import { useSpacesFromNumbers } from "../../../../utilities/useSpacesFormNumbers";
-import { declension } from "../../../../utilities/declension";
 import { Logo } from "../../../../utilities/logos";
 import { useCurrencyStore } from "../../../../store/currencyStore";
 import styles from "./ticket.module.scss";
 import { TicketProps } from "../../../../types";
 import { SYMBOLS, convertPrice } from "../../../../utils/currency";
 import { useLanguageStore } from '../../../../store/languageStore';
-import { translations, TranslationKey } from '../../../../utils/translations';
+import { translations} from '../../../../utils/translations';
 import { motion } from 'framer-motion';
 
 const formatDate = (dateStr: string) => {
